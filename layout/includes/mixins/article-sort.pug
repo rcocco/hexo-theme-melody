@@ -10,3 +10,17 @@ mixin articleSort(posts)
         time.article-sort-item__time= date(article.date)
         a.article-sort-item__title(href=url_for(article.path))= article.title || 'No Title'
     - })
+
+mixin articleCategorySort(posts, pageCategory)
+  .article-sort
+    - var category = ''
+    - posts.each(function (article) {
+      - var tempCategories = article.categories.toArray().map(d=>d.name)
+      - tempCategories = tempCategories.slice(tempCategories.indexOf(pageCategory)+1).join(' - ')
+      if tempCategories !== category
+        - category = tempCategories
+        .article-sort-item.year= category
+      .article-sort-item
+        time.article-sort-item__time= date(article.updated)
+        a.article-sort-item__title(href=url_for(article.path))= article.title || 'No Title'
+    - })
